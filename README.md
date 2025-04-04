@@ -8,3 +8,8 @@
 - ERD <br>
 ![database_erd](./database_erd.png) <br>
 [erd 링크](https://www.erdcloud.com/d/CxvS2pMFYYod7CuC2)
+
+**********
+## 4주차
+### member CRUD 구현
+
