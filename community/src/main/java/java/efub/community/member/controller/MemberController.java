@@ -4,7 +4,7 @@ import java.efub.community.member.dto.CreateMemberResponseDto; // 회원가입 �
 import java.efub.community.member.dto.CreateMemberRequestDto; // 회원가입 요청 DTO
 import java.efub.community.member.dto.MemberResponseDto;
 import java.efub.community.member.dto.MemberUpdateRequestDto; // 회원 정보 수정 요청 DTO
-import java.efub.community.member.service.MembersService;
+import java.efub.community.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MemberController {
 
-    private final MembersService memberService; // 서비스 클래스 이름 수정
+    private final MemberService memberService; // 서비스 클래스 이름 수정
 
     // 회원 조회: GET /members/{memberId}
     @GetMapping("/{memberId}")

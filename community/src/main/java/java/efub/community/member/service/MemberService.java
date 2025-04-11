@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor // 한 줄로 받아오게..?
-//@Transactional
-public class MembersService {
+@Transactional
+public class MemberService {
 
     private final MemberRepository membersRepository;
 
@@ -22,7 +22,7 @@ public class MembersService {
     @Transactional(readOnly = true)
     public MemberResponseDto getMember(Long memberId) {
         // 존재여부 확인
-        Member member = membersRepository.findById(memberId).orElseThrow( ()-> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
+        Member member = membersRepository.findByMemberId(memberId).orElseThrow( ()-> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
         return MemberResponseDto.from(member);
     }
 
@@ -48,6 +48,5 @@ public class MembersService {
     public void deleteMember(Long memberId) {
         Member member = membersRepository.findByMemberId(memberId).orElseThrow(()-> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
         member.changeStatus(MemberStatus.DEACTIVATED);
-        membersRepository.save(member);
     }
 }
