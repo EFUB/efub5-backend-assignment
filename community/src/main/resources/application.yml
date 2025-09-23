@@ -1,10 +1,10 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/tete?useSSL=false&serverTimezone=UTC
-    username: efub
-    password: 1234
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+    username: root
+    password: '0420'
   jpa:
+    database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
