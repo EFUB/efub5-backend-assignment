@@ -28,15 +28,13 @@ public class MemberService {
 
     // 회원가입
     public CreateMemberResponseDto createMember(CreateMemberRequestDto requestDto) {
-        /*if(membersRepository.existsByEmail(requestDto.getEmail())) {
+        if(membersRepository.existsByEmail(requestDto.getEmail())) {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다." + requestDto.getEmail());
         }
         Member member = requestDto.toEntity();
         Member saved = membersRepository.save(member);
 
-        return CreateMemberResponseDto.from(saved);*/
-
-        throw new UnsupportedOperationException("아직 구현되지 않은 기능입니다.");
+        return CreateMemberResponseDto.from(saved);
     }
 
     // 프로필(자기소개) 수정
