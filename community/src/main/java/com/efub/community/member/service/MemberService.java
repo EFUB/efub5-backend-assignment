@@ -1,5 +1,7 @@
 package com.efub.community.member.service;
 
+import com.efub.community.global.exception.BlogException;
+import com.efub.community.global.exception.ExceptionCode;
 import com.efub.community.member.domain.entity.Member;
 import com.efub.community.member.domain.entity.MemberStatus;
 import com.efub.community.member.dto.CreateMemberRequestDto;
@@ -28,8 +30,8 @@ public class MemberService {
 
     // 회원가입
     public CreateMemberResponseDto createMember(CreateMemberRequestDto requestDto) {
-        if(membersRepository.existsByEmail(requestDto.getEmail())) {
-            throw new IllegalArgumentException("이미 존재하는 이메일입니다." + requestDto.getEmail());
+        if (membersRepository.existsByEmail(requestDto.getEmail())) {
+            throw new BlogException(ExceptionCode.DUPLICATE_EMAIL);
         }
         Member member = requestDto.toEntity();
         Member saved = membersRepository.save(member);

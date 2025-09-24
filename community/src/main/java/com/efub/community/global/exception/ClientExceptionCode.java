@@ -7,6 +7,7 @@ public enum ClientExceptionCode {
 
     // Account
     MEMBER_NOT_FOUND,
+    DUPLICATE_EMAIL,
 
     // Post
     POST_NOT_FOUND,
