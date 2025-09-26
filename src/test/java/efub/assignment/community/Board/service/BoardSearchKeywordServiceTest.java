@@ -31,53 +31,46 @@ public class BoardSearchKeywordServiceTest {
     @Test
     void 게시판_이름_정확히_일치하면_검색된다(){
         String keyword = "컴공벗들모여라";
-        Member member = Member.builder()
-                .email("test@email.com")
-                .nickname("nickname")
-                .studentId("studentId")
-                .university("University")
-                .build();
-        Board board = Board.builder()
-                .owner(member)
-                .name(keyword)
-                .notice("모이셈")
-                .description("description")
-                .build();
-        given(boardRepository.findByNameContaining(keyword))
-                .willReturn(List.of(board));
-        List<BoardSimpleResponse> result = boardSearchKeywordService.searchByName(keyword);
-
-        assertEquals(1, result.size());
-        assertEquals(keyword, result.get(0).getName());
+        Member member = 기본_멤버_생성();
+        Board board = 기본_게시판_생성(member, keyword);
+        searchByNameAndAssert(keyword, List.of(board), keyword);
     }
 
     @Test
-    void 검색어_일부_일치_시에도_반환한다(){
-        Member member = Member.builder()
+    void 검색어_일부_일치_시에도_반환한다() {
+        List<Board> boards = List.of("컴공벗들모여라", "컴공스터디").stream()
+                .map(name -> 기본_게시판_생성(기본_멤버_생성(), name))
+                .toList();
+
+        searchByNameAndAssert("컴공", boards, "컴공벗들모여라", "컴공스터디");
+    }
+
+    private Member 기본_멤버_생성(){
+        return Member.builder()
                 .email("test@email.com")
                 .nickname("nickname")
                 .studentId("studentId")
                 .university("University")
                 .build();
+    }
 
-        Board board1 = Board.builder()
-                .owner(member)
-                .name("컴공벗들모여라")
+    private Board 기본_게시판_생성(Member owner, String name){
+        return Board.builder()
+                .owner(owner)
+                .name(name)
                 .notice("공지")
                 .description("설명")
                 .build();
+    }
 
-        Board board2 = Board.builder()
-                .owner(member)
-                .name("컴공스터디")
-                .notice("공지")
-                .description("설명")
-                .build();
-        given(boardRepository.findByNameContaining("컴공"))
-                .willReturn(List.of(board1, board2));
-        List<BoardSimpleResponse> result = boardSearchKeywordService.searchByName("컴공");
-        assertEquals(2, result.size());
-        assertTrue(result.stream().anyMatch(b -> b.getName().equals("컴공벗들모여라")));
-        assertTrue(result.stream().anyMatch(b -> b.getName().equals("컴공스터디")));
+    private void searchByNameAndAssert(String keyword, List<Board> stubBoards, String... expectedNames) {
+        given(boardRepository.findByNameContaining(keyword)).willReturn(stubBoards);
+
+        List<BoardSimpleResponse> result = boardSearchKeywordService.searchByName(keyword);
+
+        assertEquals(expectedNames.length, result.size());
+        for (String name : expectedNames) {
+            assertTrue(result.stream().anyMatch(b -> b.getName().equals(name)));
+        }
     }
 }
