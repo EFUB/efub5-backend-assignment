@@ -21,6 +21,11 @@ public class BoardSearchKeyword {
 
     @Builder
     public BoardSearchKeyword(String keyword) {
-        this.keyword = keyword;
+        if(keyword == null){
+            throw new IllegalArgumentException("키워드가 null이면 안됩니다.");
+        }
+        if(keyword.isEmpty()){
+            throw new IllegalArgumentException("키워드가 빈문자열이면 안됩니다");
+        }
     }
 }

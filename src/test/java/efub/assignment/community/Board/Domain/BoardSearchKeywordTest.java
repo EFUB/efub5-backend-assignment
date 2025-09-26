@@ -12,4 +12,9 @@ public class BoardSearchKeywordTest {
     void 검색어가_null이면_예외발생(){
         assertThrows(IllegalArgumentException.class, () -> BoardSearchKeyword.builder().keyword(null).build());
     }
+
+    @Test
+    void 검색어가_빈문자열이면_예외발생(){
+        assertThrows(IllegalArgumentException.class, () -> BoardSearchKeyword.builder().keyword("").build());
+    }
 }
