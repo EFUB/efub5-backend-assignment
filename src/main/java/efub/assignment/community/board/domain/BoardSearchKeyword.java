@@ -6,11 +6,14 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BoardSearchKeyword {
+public class BoardSearchKeyword extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +30,6 @@ public class BoardSearchKeyword {
         if(keyword.isEmpty()){
             throw new IllegalArgumentException("키워드가 빈문자열이면 안됩니다");
         }
+        this.keyword = keyword;
     }
 }
