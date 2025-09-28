@@ -38,7 +38,7 @@ public class Member {
 
     // 회원 상태
     @Enumerated(EnumType.STRING)
-    private MemberStatus status; // = MemberStatus.ACTIVE; <-- 기본값 설정을 제거
+    private MemberStatus status = MemberStatus.ACTIVE;
 
     @Builder // setter 지양.
     public Member(String email, String password, String nickname, String university, String studentId) {
