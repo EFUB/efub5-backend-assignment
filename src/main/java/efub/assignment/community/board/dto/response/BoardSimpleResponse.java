@@ -1,7 +1,6 @@
 package efub.assignment.community.board.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter
