@@ -8,7 +8,7 @@ public record MessageRoomResponse(
         Long messageRoomId,
         Long senderId,
         Long receiverId,
-        String messageContent,
+        String firstMessageContent,
         LocalDateTime createdAt
 ) {
     public static MessageRoomResponse from(MessageRoom messageRoom){
@@ -16,7 +16,7 @@ public record MessageRoomResponse(
                 messageRoom.getMessageRoomId(),
                 messageRoom.getSender().getMemberId(),
                 messageRoom.getReceiver().getMemberId(),
-                messageRoom.getMessageContent(),
+                messageRoom.getFirstMessageContent(),
                 messageRoom.getCreatedAt()
         );
     }

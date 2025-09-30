@@ -33,7 +33,7 @@ public class MessageRoomController {
     }
 
     // 보내려는 사람과의 채팅방이 존재하는지 여부 조회
-    @GetMapping("/check")
+    @PostMapping("/check")
     public ResponseEntity<MessageRoomIdResponse> checkMessageRoom(@RequestBody MessageRoomCheckRequest request) {
         Long id = messageRoomService.findExistingMessageRoomId(request);
         return ResponseEntity.ok(new MessageRoomIdResponse(id));

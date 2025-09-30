@@ -50,6 +50,14 @@ public class Message extends BaseEntity {
     // 보낸 건지 받은 건지 여부
     private boolean isSentByMe;
 
+    // 내용 수정
+    public void edit(String newContent) {
+        if (newContent == null || newContent.isBlank()) {
+            throw new IllegalArgumentException("메시지 내용은 비어 있을 수 없습니다.");
+        }
+        this.messageContent = newContent;
+    }
+
     @Builder
     public Message(Member sender, MessageRoom messageRoom, String messageContent, boolean isSentByMe){
         this.sender=sender;

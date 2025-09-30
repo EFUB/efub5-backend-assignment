@@ -17,7 +17,6 @@ public record MessageRoomCreateRequest(
                 .sender(sender)
                 .receiver(receiver)
                 .post(post)
-                .messageContent(messageContent)
                 .build();
     }
 }

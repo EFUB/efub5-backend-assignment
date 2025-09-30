@@ -3,19 +3,15 @@ spring:
     name: community
 
   datasource:
-    url: jdbc:mysql://localhost:3306/community?useSSL=false&useUnicode=true
-    username: root
-    password: mdmstj2395!
+    url: jdbc:mysql://${RDS_IP}:3306/community?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-  jpa:
+jpa:
+  hibernate:
+    ddl-auto: update
+  show-sql: true
+  properties:
     hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-
-server:
-  port: 8000
-
+      format_sql: true

@@ -2,6 +2,7 @@ package efub.assignment.community.messageRooom.domain;
 
 import efub.assignment.community.global.domain.BaseEntity;
 import efub.assignment.community.member.domain.Member;
+import efub.assignment.community.message.domain.Message;
 import efub.assignment.community.post.domain.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,9 +38,9 @@ public class MessageRoom extends BaseEntity {
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
-    // 첫 쪽지 내용
-    @Column(nullable = false)
-    private String messageContent;
+    // 연관 메시지 리스트 (양방향 매핑)
+    @OneToMany(mappedBy = "messageRoom", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<Message> messages;
 
     // 생성일
     @CreatedDate
@@ -46,10 +48,22 @@ public class MessageRoom extends BaseEntity {
     private LocalDateTime createdAt;
 
     @Builder
-    public MessageRoom(Member sender, Member receiver, Post post, String messageContent) {
+    public MessageRoom(Member sender, Member receiver, Post post) {
         this.sender = sender;
         this.receiver = receiver;
         this.post = post;
-        this.messageContent = messageContent;
     }
+
+    public String getFirstMessageContent() {
+        if (messages == null || messages.isEmpty()) {
+            return null; // 메시지가 없는 경우
+        }
+        // 메시지를 createdAt 기준으로 정렬 후 첫 번째 메시지의 내용 반환
+        return messages.stream()
+                .sorted((m1, m2) -> m1.getCreatedAt().compareTo(m2.getCreatedAt()))
+                .findFirst()
+                .map(Message::getMessageContent)
+                .orElse(null);
+    }
+
 }
