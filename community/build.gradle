@@ -1,10 +1,10 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.4.4'
+	id 'org.springframework.boot' version '3.3.10'
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
-group = 'efub.assignment'
+group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -28,12 +28,17 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// warning: unknown enum constant When.MAYBE
+	compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	jvmArgs "-Xshare:off"
 }
