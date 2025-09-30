@@ -5,10 +5,13 @@ import efub.assignment.community.board.repository.BoardRepository;
 import efub.assignment.community.member.domain.Member;
 import efub.assignment.community.member.repository.MemberRepository;
 import efub.assignment.community.post.domain.Post;
+import efub.assignment.community.post.domain.PostHeart;
 import efub.assignment.community.post.dto.request.PostCreateRequestDto;
+import efub.assignment.community.post.dto.request.PostLikeDto;
 import efub.assignment.community.post.dto.response.PostListResponseDto;
 import efub.assignment.community.post.dto.response.PostResponseDto;
 import efub.assignment.community.post.dto.request.UpdateContentDto;
+import efub.assignment.community.post.repository.PostHeartRepository;
 import efub.assignment.community.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,7 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final PostHeartRepository postHeartRepository;
     private final BoardRepository boardRepository;
     private final MemberRepository memberRepository;
 
@@ -68,5 +72,33 @@ public class PostService {
     @Transactional
     public void deletePost(Long postId) {
         postRepository.deleteByPostId(postId);
+    }
+
+    // 댓글 좋아요
+    @Transactional
+    public boolean toggleHeart(PostLikeDto dto) {
+        Post post = postRepository.findById(dto.postId())
+                .orElseThrow(() -> new IllegalArgumentException("Post Not Found"));
+        Member member = memberRepository.findById(dto.memberId())
+                .orElseThrow(() -> new IllegalArgumentException("Member Not Found"));
+
+        if (postHeartRepository.existsByPostAndMember(post, member)) {
+            postHeartRepository.deleteByPostAndMember(post, member);
+            return false; // 좋아요 취소
+        } else {
+            PostHeart postHeart = PostHeart.builder()
+                    .post(post)
+                    .member(member)
+                    .build();
+            postHeartRepository.save(postHeart);
+            return true; // 좋아요 등록
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public long getHeartCount(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("Post Not Found"));
+        return postHeartRepository.countByPost(post);
     }
 }
