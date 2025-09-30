@@ -16,6 +16,9 @@ public enum ExceptionCode {
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, ClientExceptionCode.MEMBER_NOT_FOUND, "계정이 존재하지 않습니다."),
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, ClientExceptionCode.POST_NOT_FOUND, "포스트가 존재하지 않습니다."),
 
+    // 409 Conflict
+    DUPLICATE_EMAIL(HttpStatus.CONFLICT, ClientExceptionCode.DUPLICATE_EMAIL, "이미 존재하는 이메일입니다."),
+
     // 500 Internal Server Error
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, ClientExceptionCode.INTERNAL_SERVER_ERROR, "예상치 못한 서버에러가 발생했습니다.");
 
