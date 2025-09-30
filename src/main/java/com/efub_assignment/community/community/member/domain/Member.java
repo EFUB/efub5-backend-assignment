@@ -59,9 +59,8 @@ public class Member extends BaseTimeEntity {
         this.password = password;
     }
 
-    public void updateNickname(String nickname){
-        this.nickname = nickname;
-    }
+    public void updateNickname(String nickname){this.nickname = nickname; // 닉네임을 변경하는 로직 추가
+        }
 
     public void changeStatus(MemberStatus status){
         this.status = status;
