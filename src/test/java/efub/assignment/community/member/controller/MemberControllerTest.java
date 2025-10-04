@@ -62,7 +62,6 @@ class MemberControllerTest {
         mockMvc.perform(post("/members")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(tooLongNickNameRequest)))
-                .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("닉네임은 1자 이상 8자 이하로 입력해주세요."))
                 .andExpect(jsonPath("$.status").value(400))
