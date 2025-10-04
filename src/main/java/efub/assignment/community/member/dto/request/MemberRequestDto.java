@@ -1,14 +1,17 @@
 package efub.assignment.community.member.dto.request;
 
 import efub.assignment.community.member.domain.Member;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class MemberRequestDto {
 
     @NotBlank(message = "학번을 입력해주세요.")
@@ -25,6 +28,7 @@ public class MemberRequestDto {
 
     @NotBlank(message = "메일을 입력해주세요.")
     @Size(max = 100, message = "메일은 최대 100자까지 입력할 수 있습니다.")
+    @Email
     private String email;
 
     @NotBlank(message = "비밀번호를 입력해주세요.")
