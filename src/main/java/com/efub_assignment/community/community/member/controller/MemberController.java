@@ -26,26 +26,26 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
-//    // 닉네임 수정 patch
-//    @PatchMapping("/profile/{memberId}")
-//    public ResponseEntity<MemberResponseDto> updateMember(@PathVariable("memberId") Long memberId, @RequestBody @Valid MemberRequestDto requestDto){
-//        MemberResponseDto responseDto = memberService.updateMember(memberId, requestDto);
-//        return ResponseEntity.ok(responseDto);
-//    }
-//
-//    // 멤버 조회 get
-//    @GetMapping("/{memberId}")
-//    public ResponseEntity<MemberResponseDto> getMember(@PathVariable("memberId") Long memberId){
-//        MemberResponseDto responseDto = memberService.getMember(memberId);
-//        return ResponseEntity.ok(responseDto);
-//    }
-//
-//    // 멤버 논리적 삭제 patch
-//    @PatchMapping("/{memberId}")
-//    public ResponseEntity<String> deleteMember(@PathVariable("memberId") Long memberId){
-//        memberService.deleteMember(memberId);
-//        return ResponseEntity.ok("삭제가 완료되었습니다.");
-//    }
+    // 닉네임 수정 patch
+    @PatchMapping("/profile/{memberId}")
+    public ResponseEntity<MemberResponseDto> updateMember(@PathVariable("memberId") Long memberId, @RequestBody @Valid MemberRequestDto requestDto){
+        MemberResponseDto responseDto = memberService.updateMember(memberId, requestDto);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 멤버 조회 get
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MemberResponseDto> getMember(@PathVariable("memberId") Long memberId){
+        MemberResponseDto responseDto = memberService.getMember(memberId);
+        return ResponseEntity.ok(responseDto);
+    }
+
+    // 멤버 논리적 삭제 patch
+    @PatchMapping("/{memberId}")
+    public ResponseEntity<String> deleteMember(@PathVariable("memberId") Long memberId){
+        memberService.deleteMember(memberId);
+        return ResponseEntity.ok("삭제가 완료되었습니다.");
+    }
 
 }
 
