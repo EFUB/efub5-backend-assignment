@@ -36,6 +36,9 @@ dependencies {
 
 	// warning: unknown enum constant When.MAYBE
 	compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+
+	// h2
+	testRuntimeOnly 'com.h2database:h2'
 }
 
 tasks.named('test') {
