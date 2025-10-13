@@ -10,7 +10,6 @@ import lombok.Builder;
 import java.util.ArrayList;
 import java.util.List;
 
-@Builder
 @Entity
 public class Post extends BaseEntity {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

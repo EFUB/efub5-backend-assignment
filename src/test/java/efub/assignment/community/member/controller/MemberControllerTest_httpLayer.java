@@ -9,8 +9,13 @@ import efub.assignment.community.member.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,11 +28,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 // HTTP 계층 테스트
 @WebMvcTest(MemberController.class)
+@MockBean(JpaMetamodelMappingContext.class)
 class MemberControllerTest_httpLayer {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockitoBean   //Controller에서 의존하는 Service Mocking && MockBean은 deprecated되었고 MockitoBean을 그 대신 사용해야함
+    @MockBean   //Controller에서 의존하는 Service Mocking && MockBean은 deprecated되었고 MockitoBean을 그 대신 사용해야함
     private MemberService memberService;
 
     @Autowired
@@ -39,10 +45,11 @@ class MemberControllerTest_httpLayer {
         MemberRequestDTO request = new MemberRequestDTO("test@ewhain.net", "홍길동", "동길", "이대", "0000000");
         MemberResponseDTO response = new MemberResponseDTO(1L, "2222222", "동길", "이대", "test@ewhain.net");
 
-        given(memberService.registerMember(any(MemberRequestDTO.class)));
+        given(memberService.registerMember(any(MemberRequestDTO.class)))
+                .willReturn(response);
 
         //when & then
-        mockMvc.perform(post("/api/members/")
+        mockMvc.perform(post("/members/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())                                                    // HTTP 상태 코드 검증
@@ -51,7 +58,7 @@ class MemberControllerTest_httpLayer {
 //                .andExpect(jsonPath("$.studentNumber").value("2222222"))
 //                .andExpect(jsonPath("$.nickname").value("동길"))
 //                .andExpect(jsonPath("$.email").value("ewhain.net"));
-                .andExpect(jsonPath("$.id").value(response.getMemberId()))
+                .andExpect(jsonPath("$.memberId").value(response.getMemberId()))
                 .andExpect(jsonPath("$.studentNumber").value(response.getStudentNumber()))
                 .andExpect(jsonPath("$.nickname").value(response.getNickname()))
                 .andExpect(jsonPath("$.email").value(response.getEmail()));
@@ -71,7 +78,7 @@ class MemberControllerTest_httpLayer {
                 .willThrow(new DuplicateMemberEmailException("이미 존재하는 회원 이메일 입니다."));
 
         //when&then
-        mockMvc.perform(post("/api/members/")
+        mockMvc.perform(post("/members/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
                 //검증 : 상태코드 400

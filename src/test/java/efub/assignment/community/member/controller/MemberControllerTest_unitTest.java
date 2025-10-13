@@ -49,7 +49,7 @@ public class MemberControllerTest_unitTest {
         //given
         MemberRequestDTO request = new MemberRequestDTO("test@ewhain.net", "2222222", "동길", "이대", "0000000");
 
-        when(memberService.registerMember(any(MemberRequestDTO.class))).thenThrow(IllegalArgumentException.class);
+        when(memberService.registerMember(any(MemberRequestDTO.class))).thenThrow(DuplicateMemberEmailException.class);
 
         Assertions.assertNotNull(request);
         assertThrows(DuplicateMemberEmailException.class, () -> memberController.registerMember(request));
