@@ -33,7 +33,7 @@ class PostControllerTest {
 
     @Test
     @DisplayName("게시물_생성_성공")
-    public void 게시글_생성_성공() {
+    public void 게시글_생성_성공() throws Exception {
         //given
 
         // (+) post 생성하려면 post가 해당하는 board도 필요함
@@ -55,7 +55,7 @@ class PostControllerTest {
         //when & then
         mockMvc.perform(post("/api/boards/1/posts")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .content(objectMapper.writeValueAsString(request)))     //objectMapper의 경우 checked exception인 JsonProcessingException을 throw하므로 예외 처리를 호출자에게 위임해야함
                 .andExpect(status().isCreated());
 
         then(postService).should().createPost(1L, request);
