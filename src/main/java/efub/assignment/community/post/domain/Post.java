@@ -5,6 +5,7 @@ import efub.assignment.community.global.domain.BaseEntity;
 import efub.assignment.community.member.domain.Member;
 import efub.assignment.community.board.domain.Board;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
