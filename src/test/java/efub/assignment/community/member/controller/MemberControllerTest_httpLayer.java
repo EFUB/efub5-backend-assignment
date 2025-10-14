@@ -33,7 +33,8 @@ class MemberControllerTest_httpLayer {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean   //Controller에서 의존하는 Service Mocking && MockBean은 deprecated되었고 MockitoBean을 그 대신 사용해야함
+//    @MockitoBean   //Controller에서 의존하는 Service Mocking && MockBean은 deprecated되었고 MockitoBean을 그 대신 사용해야함
+    @MockBean        // @WebMvcTest와의 호환성 문제로 인해서 MockBean을 사용하는 것이 더 안정적이라고 함
     private MemberService memberService;
 
     @Autowired

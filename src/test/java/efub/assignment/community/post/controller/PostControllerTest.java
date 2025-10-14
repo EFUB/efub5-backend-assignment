@@ -28,7 +28,7 @@ class PostControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockitoBean
+    @MockBean
     private PostService postService;
 
     @Autowired
