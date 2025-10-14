@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 public record PostCreateRequestDto(@NotNull Long boardId,
                                   @NotNull boolean anonymous,
                                   @NotNull Long authorId,
-                                  @NotBlank String content) {
+                                  @NotBlank(message = "게시물 내용을 입력해주세요.") String content) {
     public Post toEntity(Board board, Member author) {
         return Post.builder()
                 .board(board)
