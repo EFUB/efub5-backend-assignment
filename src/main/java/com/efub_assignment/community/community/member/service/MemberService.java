@@ -33,36 +33,36 @@ public class MemberService {
         }
     }
 
-//    // 닉네임 수정
-//    public MemberResponseDto updateMember(Long memberId,MemberRequestDto requestDto){
-//        Member member = memberRepository.findByMemberId(memberId)
-//                .orElseThrow(()->new IllegalArgumentException(("해당 계정을 찾을 수 없습니다.")));
-//        member.updateNickname(requestDto.getNickname());
-//        return MemberResponseDto.from(member);
-//
-//    }
-//
-//    // 멤버 1명 조회
-//    @Transactional(readOnly=true)
-//    public MemberResponseDto getMember(Long memberId){
-//        Member member =memberRepository.findByMemberId(memberId)
-//                .orElseThrow(()-> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
-//        return MemberResponseDto.from(member);
-//    }
-//
-//    // 멤버 논리적 삭제
-//    public void deleteMember(Long memberId){
-//        Member member = findByMemberId(memberId);
-//        member.changeStatus(MemberStatus.UNRESISTER);
-//    }
-//
-//    //멤버 물리적 삭제
-//    @Transactional
-//    public void physicalDeleteMember(Long memberId){
-//        Member member = findByMemberId(memberId);
-//        memberRepository.delete(member);
-//    }
-//
+    // 닉네임 수정
+    public MemberResponseDto updateMember(Long memberId,MemberRequestDto requestDto){
+        Member member = memberRepository.findByMemberId(memberId)
+                .orElseThrow(()->new IllegalArgumentException(("해당 계정을 찾을 수 없습니다.")));
+        member.updateNickname(requestDto.getNickname());
+        return MemberResponseDto.from(member);
+
+    }
+
+    // 멤버 1명 조회
+    @Transactional(readOnly=true)
+    public MemberResponseDto getMember(Long memberId){
+        Member member =memberRepository.findByMemberId(memberId)
+                .orElseThrow(()-> new IllegalArgumentException("해당 계정을 찾을 수 없습니다."));
+        return MemberResponseDto.from(member);
+    }
+
+    // 멤버 논리적 삭제
+    public void deleteMember(Long memberId){
+        Member member = findByMemberId(memberId);
+        member.changeStatus(MemberStatus.UNRESISTER);
+    }
+
+    //멤버 물리적 삭제
+    @Transactional
+    public void physicalDeleteMember(Long memberId){
+        Member member = findByMemberId(memberId);
+        memberRepository.delete(member);
+    }
+
     @Transactional
     public Member findByMemberId(Long memberId){
         return memberRepository.findByMemberId(memberId)
