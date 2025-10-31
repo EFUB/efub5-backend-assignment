@@ -36,6 +36,9 @@ dependencies {
 	// H2 데이터베이스 (테스트용 인메모리 DB)
 	runtimeOnly 'com.h2database:h2'
 
+	//Webflux
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
 }
 
 tasks.named('test') {

@@ -2,12 +2,12 @@ spring:
   application:
     name: community
   profiles:
-    active: test # 기본값은 dev, 필요시 ${SPRING_PROFILES_ACTIVE} 환경변수로 변경 가능
+    active: dev # 기본값은 dev, 필요시 ${SPRING_PROFILES_ACTIVE} 환경변수로 변경 가능
 
   datasource:
     url: jdbc:mysql://localhost:3306/blog?createDatabaseIfNotExist=true&characterEncoding=UTF-8&characterSetResults=UTF-8
-    username: ${RDS_USERNAME}
-    password: ${RDS_PASSWORD}
+    username: root
+    password: jya7736!
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -17,8 +17,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
-  logging:
-    level:
-      root: INFO
-      org.springframework.core.env: DEBUG
+kakao:
+  client_id: 2f5ddb2c178adab2c106ebfad19bcd4e
+  redirect_uri: http://localhost:8080/callback
