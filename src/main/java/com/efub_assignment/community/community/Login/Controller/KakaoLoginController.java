@@ -27,9 +27,6 @@ public class KakaoLoginController {
 
         KakaoUserInfoResponseDto userInfo = kakaoService.getUserInfo(accessToken);
 
-        // ★★★ 로그 추가 ★★★
-        log.info("[Controller] Received authorization code: {}", code);
-
         // 여기에 서버 사용자 로그인(인증) 또는 회원가입 로직 추가
         return new ResponseEntity<>(HttpStatus.OK);
     }
