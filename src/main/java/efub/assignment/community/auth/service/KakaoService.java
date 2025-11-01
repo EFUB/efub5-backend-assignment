@@ -1,6 +1,7 @@
 package efub.assignment.community.auth.service;
 
 import efub.assignment.community.auth.dto.response.KakaoTokenResponseDto;
+import efub.assignment.community.auth.dto.response.TokenResponseDto;
 import efub.assignment.community.auth.jwt.TokenProvider;
 import efub.assignment.community.auth.utils.KakaoUtils;
 import efub.assignment.community.member.domain.Member;
@@ -26,20 +27,19 @@ public class KakaoService {
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
 
-    public String kakaoLogin(String code){
+    public TokenResponseDto kakaoLogin(String code){
         // 1. 인가 코드로 AccessToken 받기
         String kakaoAccessToken = getAccessTokenFromKakao(code);
 
         // 2. 카카오 사용자 정보 요청
         Map<String, Object> kakaoUserInfo = getUserInfo(kakaoAccessToken);
-        String email = (String) kakaoUserInfo.get("email");
         String nickname = (String) kakaoUserInfo.get("nickname");
 
         // 3. DB에 사용자 존재 여부 확인
-        Member member = memberRepository.findByEmail(email)
+        Member member = memberRepository.findByNickname(nickname)
                 .orElseGet(() -> memberRepository.save(
                         Member.builder()
-                                .email(email)
+                                .email("")
                                 .nickname(nickname)
                                 .password("")
                                 .studentId("")
@@ -47,13 +47,13 @@ public class KakaoService {
                                 .build()
                 ));
 
-        // 4. JWT 발급
+        // 4. JWT 발급 및 redis에 저장
         String accessToken = tokenProvider.createAccessToken(member);
         String refreshToken = tokenProvider.createRefreshToken(member);
         tokenProvider.saveRefreshToken(member.getMemberId(), refreshToken);
 
         // 5. 응답 반환
-        return String.format("{\"accessToken\": \"%s\", \"refreshToken\": \"%s\"}", accessToken, refreshToken);
+        return TokenResponseDto.builder().accessToken(accessToken).build();
     }
 
     public String getAccessTokenFromKakao(String code) {

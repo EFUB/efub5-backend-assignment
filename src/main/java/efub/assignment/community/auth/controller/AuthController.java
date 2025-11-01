@@ -27,7 +27,7 @@ public class AuthController {
     }
 
     @GetMapping("/kakao")
-    public ResponseEntity<String> kakaoLogin(@RequestParam String code) {
+    public ResponseEntity<TokenResponseDto> kakaoLogin(@RequestParam String code) {
         return ResponseEntity.ok(kakaoService.kakaoLogin(code));
     }
 }

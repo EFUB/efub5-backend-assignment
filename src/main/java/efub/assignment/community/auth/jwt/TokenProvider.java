@@ -30,29 +30,14 @@ public class TokenProvider {
     private static Long accessTokenExpiration = 1000*60*60L;    // 1시간
     private static Long refreshTokenExpiration = 1000*60*60*25*14L; // 2주
 
+    // 토큰 redis 저장 prefix
+    private static final String REFRESH_TOKEN_KEY_PREFIX = "refresh_token:";
+
     // 토큰에 포함할 기본 정보와 클레임 키값 설정
     private static final String AUTH_CLAIM = "auth";
 
     private final MemberRepository memberRepository;
     private final RedisTemplate<String, String> redisTemplate;
-
-    /**
-     * AccessToken 생성 메소드
-     * 사용자 이메일 정보를 포함해 AccessToken 생성
-     */
-
-
-    /**
-     * RefreshToken 생성 메소드
-     */
-
-
-    /**
-     * Redis에 리프레시 토큰을 저장하는 메소드
-     * key: 사용자 ID, alue: 리프레시 토큰
-     * 리프레시토큰 만료 시간(refreshTokenExpiration)을 만료시간으로 정해 자동으로 삭제되도록 설정
-     */
-
 
     /**
      * AccessToken에서 email 추출
@@ -149,6 +134,6 @@ public class TokenProvider {
     }
 
     public void saveRefreshToken(Long accountId, String refreshToken) {
-        redisTemplate.opsForValue().set(accountId.toString(), refreshToken, Duration.ofMillis(refreshTokenExpiration));
+        redisTemplate.opsForValue().set(REFRESH_TOKEN_KEY_PREFIX + accountId.toString(), refreshToken, Duration.ofMillis(refreshTokenExpiration));
     }
 }

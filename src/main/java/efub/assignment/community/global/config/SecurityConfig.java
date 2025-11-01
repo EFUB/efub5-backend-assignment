@@ -2,7 +2,7 @@ package efub.assignment.community.global.config;
 
 import efub.assignment.community.auth.jwt.JwtAuthenticationFilter;
 import efub.assignment.community.auth.jwt.TokenProvider;
-import efub.assignment.community.auth.service.GoogleOAuth2UserService;
+import efub.assignment.community.auth.service.CustomOAuth2UserService;
 import efub.assignment.community.global.handler.OAuth2AuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,13 +21,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final TokenProvider tokenProvider;
-    private final GoogleOAuth2UserService customOAuth2UserService;
+    private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
-    /**
-     * SecurityFilterChain 설정을 위한 Bean 등록
-     * HTTP 요청에 대한 보안 구성을 정의하고, JWT 인증 필터 추가
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -57,8 +53,6 @@ public class SecurityConfig {
                 .build();
     }
 
-
-    // ============== [ CORS 설정 Bean 추가 ] ==============
     @Bean
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
@@ -81,5 +75,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-    // ===============================================
 }

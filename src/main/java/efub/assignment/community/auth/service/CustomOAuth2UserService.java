@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class GoogleOAuth2UserService implements OAuth2UserService {
+public class CustomOAuth2UserService implements OAuth2UserService {
 
     private final MemberRepository memberRepository;
 
@@ -50,12 +50,6 @@ public class GoogleOAuth2UserService implements OAuth2UserService {
         );
     }
 
-    /**
-     * 사용자 생성 메서드
-     * - 처음으로 소셜 로그인을 시도하는 사용자를 우리 데이터베이스에 자동으로 등록해주는 메서드 생성
-     *
-     * OAuth2로그인은 비밀번호가 필요하지 않으므로 ""
-     */
     private Member createAccount(OAuth2UserInfo oAuth2UserInfo){
         Member member = Member.builder()
                 .email(oAuth2UserInfo.getEmail())

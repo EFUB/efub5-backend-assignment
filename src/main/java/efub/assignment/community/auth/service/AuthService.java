@@ -17,11 +17,6 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final RedisTemplate<String, String> redisTemplate;
 
-    /**
-     * AccessToken 재발급
-     *
-     * 클라이언트가 전달한 리프레시 토큰을 검증해 유효한 경우 새로운 액세스토큰을 발급한다.
-     */
     public TokenResponseDto reissueAccessToken(String refreshToken){
         // 전달받은 리프레시 토큰에서 이메일을 추출하여 사용자 정보 가져오기
         String email = tokenProvider.extractEmail(refreshToken);
@@ -44,9 +39,6 @@ public class AuthService {
 
     }
 
-    /**
-     * Email로 사용자 객체 가져오기
-     */
     @Transactional(readOnly = true)
     public Member getUserByEmail(String email){
         return memberRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException("해당 이메일로 사용자를 찾을 수 없습니다."));
