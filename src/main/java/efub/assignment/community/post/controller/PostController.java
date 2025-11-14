@@ -1,7 +1,5 @@
 package efub.assignment.community.post.controller;
 
-import efub.assignment.community.comment.dto.response.PostCommentResponseDto;
-import efub.assignment.community.comment.service.CommentService;
 import efub.assignment.community.post.dto.request.PostCreateRequestDto;
 import efub.assignment.community.post.dto.request.PostLikeDto;
 import efub.assignment.community.post.dto.response.PostListResponseDto;
@@ -13,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -61,5 +61,15 @@ public class PostController {
     public ResponseEntity<Boolean> toggleHeart(@Valid @RequestBody PostLikeDto request) {
         boolean liked = postService.toggleHeart(request);
         return ResponseEntity.ok(liked);
+    }
+
+    // 게시글 검색
+    @GetMapping("/search")
+    public ResponseEntity<List<PostResponseDto>> searchPost(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "author", required = false) String authorName,
+            @RequestParam(value = "board", required = false) String boardName
+    ) {
+        return ResponseEntity.ok(postService.searchPost(keyword, authorName, boardName));
     }
 }

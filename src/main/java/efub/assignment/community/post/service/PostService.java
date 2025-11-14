@@ -101,4 +101,11 @@ public class PostService {
                 .orElseThrow(() -> new IllegalArgumentException("Post Not Found"));
         return postHeartRepository.countByPost(post);
     }
+
+    @Transactional(readOnly = true)
+    public List<PostResponseDto> searchPost(String keyword, String authorName, String boardName) {
+        return postRepository.search(keyword, authorName, boardName).stream()
+                .map(PostResponseDto::from)
+                .toList();
+    }
 }
