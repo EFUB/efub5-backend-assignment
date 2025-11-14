@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface PostRepository extends JpaRepository<Post, Long>{
+public interface PostRepository extends JpaRepository<Post, Long>, CustomPostRepository{
 
     //게시물 아이디로 게시물 찾기
     Optional<Post> findById(Long id);

@@ -4,6 +4,7 @@ import com.efub_assignment.community.community.post.dto.request.PostCreateReques
 import com.efub_assignment.community.community.post.dto.request.PostUpdateRequest;
 import com.efub_assignment.community.community.post.dto.response.PostListResponse;
 import com.efub_assignment.community.community.post.dto.response.PostResponse;
+import com.efub_assignment.community.community.post.dto.response.PostSearchResponseDto;
 import com.efub_assignment.community.community.post.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -59,6 +61,14 @@ public class PostController {
         return ResponseEntity.noContent().build();
     }
 
+    //게시글 검색
+    @GetMapping("/search")
+    public ResponseEntity<List<PostSearchResponseDto>> searchPost(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "writer", required = false) String writerNickname
+    ){
+        return ResponseEntity.ok(postService.searchPost(keyword, writerNickname));
+    }
     //게시글 좋아요
     @PostMapping("/{postId}/like")
     public ResponseEntity<String> likePost(@PathVariable("postId") Long postId,
