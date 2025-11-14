@@ -64,6 +64,14 @@ public class PostService {
         return PostListResponseDto.from(boardId, postList);
     }
 
+    // 글쓴이, 내용으로 게시물 조회
+    @Transactional(readOnly = true)
+    public List<PostResponseDto> searchPost(String keyword, String writerNickname) {
+        return postRepository.search(keyword, writerNickname).stream()
+                .map(PostResponseDto::from)
+                .toList();
+    }
+
     // 게시글 삭제
     @Transactional
     public void deletePost(Long postId) {

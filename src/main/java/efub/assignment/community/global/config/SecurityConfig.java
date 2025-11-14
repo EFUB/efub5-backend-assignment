@@ -40,6 +40,7 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 // 요청에 따른 인증 인가 설정
                 .authorizeHttpRequests(request ->{
+                    request.requestMatchers(HttpMethod.GET).permitAll();
                     request.requestMatchers("/**").permitAll();
                     request.anyRequest().authenticated();
                 })

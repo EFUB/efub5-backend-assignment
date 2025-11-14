@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
@@ -47,6 +49,13 @@ public class PostController {
     public ResponseEntity<PostListResponseDto> getPosts(@PathVariable Long boardId) {
         PostListResponseDto postListResponseDto = postService.getPostList(boardId);
         return ResponseEntity.status(HttpStatus.OK).body(postListResponseDto);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<PostResponseDto>> searchPost(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "writer", required = false) String writerNickname) {
+        return ResponseEntity.ok(postService.searchPost(keyword, writerNickname));
     }
 
     // 게시글 삭제
