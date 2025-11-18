@@ -10,6 +10,7 @@ import com.efub_assignment.community.community.post.dto.request.PostCreateReques
 import com.efub_assignment.community.community.post.dto.request.PostUpdateRequest;
 import com.efub_assignment.community.community.post.dto.response.PostListResponse;
 import com.efub_assignment.community.community.post.dto.response.PostResponse;
+import com.efub_assignment.community.community.post.dto.response.PostSearchResponseDto;
 import com.efub_assignment.community.community.post.dto.summary.PostSummary;
 import com.efub_assignment.community.community.post.repository.PostLikeRepository;
 import com.efub_assignment.community.community.post.repository.PostRepository;
@@ -72,6 +73,14 @@ public class PostService {
         Member member = findByMemberId(memberId);
         authorizePostWriter(post, member, password);
         postRepository.delete(post);
+    }
+
+    //검색 기능 추가
+    @Transactional(readOnly = true)
+    public List<PostSearchResponseDto> searchPost(String keyword, String writerNickname){
+        return postRepository.search(keyword, writerNickname).stream()
+                .map(PostSearchResponseDto::new)
+                .toList();
     }
 
     //게시글 좋아요 등록
