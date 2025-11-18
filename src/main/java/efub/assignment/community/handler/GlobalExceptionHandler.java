@@ -1,4 +1,4 @@
-package efub.assignment.community.global.handler;
+package efub.assignment.community.handler;
 
 import efub.assignment.community.member.dto.response.ErrorResponseDto;
 import jakarta.servlet.http.HttpServletRequest;
